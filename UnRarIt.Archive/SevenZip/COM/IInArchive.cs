@@ -19,4 +19,4 @@ namespace UnRarIt.Archive
     uint GetNumberOfArchiveProperties();
     void GetArchivePropertyInfo(UInt32 index, [MarshalAs(UnmanagedType.BStr)] string name, out ItemPropId propID, out ushort varType);
   }
-}
+ }

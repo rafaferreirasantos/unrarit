@@ -24,7 +24,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Priority" Type="UnRarIt.Interop.ThreadIOPriority" Scope="User">
-      <Value Profile="(Default)">NORMAL</Value>
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
   </Settings>
 </SettingsFile>
