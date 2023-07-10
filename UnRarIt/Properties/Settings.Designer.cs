@@ -118,5 +118,17 @@ namespace UnRarIt.Properties {
                 this["Priority"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PasswordFile {
+            get {
+                return ((string)(this["PasswordFile"]));
+            }
+            set {
+                this["PasswordFile"] = value;
+            }
+        }
     }
 }

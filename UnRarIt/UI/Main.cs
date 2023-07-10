@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -71,14 +72,17 @@ namespace UnRarIt
       Dests.AddRange(Config.Destinations.ToArray());
       DestinationsChanged();
 
-      if (!string.IsNullOrEmpty(dir)) {
+      if (!string.IsNullOrEmpty(dir))
+      {
         Dests.Add(dir);
       }
 
-      if (args != null && args.Length != 0) {
+      if (args != null && args.Length != 0)
+      {
         AddFiles(args);
       }
-      else {
+      else
+      {
         AdjustHeaders();
       }
     }
@@ -93,13 +97,15 @@ namespace UnRarIt
 
     public Version AppVersion
     {
-      get {
+      get
+      {
         return Assembly.GetExecutingAssembly().GetName().Version;
       }
     }
     public Uri UpdateUri
     {
-      get {
+      get
+      {
         return new Uri("https://tn123.org/UnRarIt/version");
       }
     }
@@ -127,7 +133,8 @@ namespace UnRarIt
       var seen = new Dictionary<string, ArchiveItem>();
 
       Files.BeginUpdate();
-      foreach (ArchiveItem i in Files.Items) {
+      foreach (ArchiveItem i in Files.Items)
+      {
         seen[i.FileName.ToUpperInvariant()] = i;
       }
 
@@ -135,12 +142,16 @@ namespace UnRarIt
 
       var added = AddFiles(silentFiles, nested, seen, consumer);
       added |= AddFiles(aFiles, nested, seen, consumer);
-      foreach (var p in consumer.Parts) {
+      foreach (var p in consumer.Parts)
+      {
         var parts = p.Value;
         var files = parts.Files;
-        if (!parts.HasPart(p.Key)) {
-          foreach (var i in files) {
-            if (!seen.ContainsKey(i.FullName.ToUpperInvariant())) {
+        if (!parts.HasPart(p.Key))
+        {
+          foreach (var i in files)
+          {
+            if (!seen.ContainsKey(i.FullName.ToUpperInvariant()))
+            {
               silentFiles.Add(i.FullName);
             }
           }
@@ -150,19 +161,23 @@ namespace UnRarIt
         var file = files[0];
         files.RemoveAt(0);
         ArchiveItem item;
-        if (!seen.TryGetValue(file.FullName.ToUpperInvariant(), out item)) {
+        if (!seen.TryGetValue(file.FullName.ToUpperInvariant(), out item))
+        {
           item = CreateItem(nested, file);
           Files.Items.Add(item);
         }
-        foreach (var i in files) {
+        foreach (var i in files)
+        {
           item.AddPart(i);
         }
-        if (!parts.IsComplete) {
+        if (!parts.IsComplete)
+        {
           item.StateImageIndex = 3;
           item.SubStatus = "Missing parts! Re-queue at your own risk!";
           item.StateImageIndex = 4;
         }
-        else if (item.StateImageIndex == 4) {
+        else if (item.StateImageIndex == 4)
+        {
           item.StateImageIndex = 3;
           item.SubStatus = "Ready...";
           item.StateImageIndex = 0;
@@ -184,35 +199,43 @@ namespace UnRarIt
     {
       var added = false;
       var files = aFiles.ToArray();
-      foreach (string file in files) {
-        try {
+      foreach (string file in files)
+      {
+        try
+        {
           var info = new FileInfo(file);
-          if (!info.Exists) {
+          if (!info.Exists)
+          {
             continue;
           }
-          if ((info.Attributes & FileAttributes.Directory) == FileAttributes.Directory) {
+          if ((info.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
+          {
             continue;
           }
 
-          if (consumer.Consume(info)) {
+          if (consumer.Consume(info))
+          {
             aFiles.Remove(file);
             continue;
           }
 
           var ext = info.Extension.ToUpperInvariant();
-          if (seen.ContainsKey(info.FullName.ToUpperInvariant())) {
+          if (seen.ContainsKey(info.FullName.ToUpperInvariant()))
+          {
             continue;
           }
 
           ArchiveItem item = CreateItem(nested, info, ext);
-          if (item == null) {
+          if (item == null)
+          {
             continue;
           }
           seen[info.FullName.ToUpperInvariant()] = item;
           added = true;
           Files.Items.Add(item);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
           Console.Error.WriteLine(ex);
         }
       }
@@ -226,33 +249,39 @@ namespace UnRarIt
     private ArchiveItem CreateItem(bool nested, FileInfo info, string ext)
     {
       ArchiveItem item = null;
-      if (ext == ".ZIP" || ext == ".JAR" || ext == ".XPI") {
+      if (ext == ".ZIP" || ext == ".JAR" || ext == ".XPI")
+      {
         item = new ArchiveItem(info.FullName, ArchiveFile.FormatZip, nested);
         item.Group = Files.Groups["GroupZip"];
       }
       else
-        if (ext == ".7Z") {
-          item = new ArchiveItem(info.FullName, ArchiveFile.FormatSevenZip, nested);
-          item.Group = Files.Groups["GroupSevenZip"];
-        }
-        else
-          if (ext == ".RAR") {
-            item = new ArchiveItem(info.FullName, ArchiveFile.FormatRar, nested);
-            item.Group = Files.Groups["GroupRar"];
-          }
-          else
-            if (ext == ".001") {
-              item = new ArchiveItem(info.FullName, ArchiveFile.FormatSplit, nested);
-              item.Group = Files.Groups["GroupSplit"];
-            }
+        if (ext == ".7Z")
+      {
+        item = new ArchiveItem(info.FullName, ArchiveFile.FormatSevenZip, nested);
+        item.Group = Files.Groups["GroupSevenZip"];
+      }
+      else
+          if (ext == ".RAR")
+      {
+        item = new ArchiveItem(info.FullName, ArchiveFile.FormatRar, nested);
+        item.Group = Files.Groups["GroupRar"];
+      }
+      else
+            if (ext == ".001")
+      {
+        item = new ArchiveItem(info.FullName, ArchiveFile.FormatSplit, nested);
+        item.Group = Files.Groups["GroupSplit"];
+      }
       return item;
     }
 
     private void AddPassword_Click(object sender, EventArgs e)
     {
-      using (var apf = new AddPasswordForm()) {
+      using (var apf = new AddPasswordForm())
+      {
         var dr = apf.ShowDialog();
-        switch (dr) {
+        switch (dr)
+        {
           case DialogResult.OK:
             passwords.SetGood(apf.Password.Text.Trim());
             break;
@@ -269,21 +298,25 @@ namespace UnRarIt
     private void AdjustHeaders()
     {
       var style = ColumnHeaderAutoResizeStyle.ColumnContent;
-      if (Files.Items.Count == 0) {
+      if (Files.Items.Count == 0)
+      {
         style = ColumnHeaderAutoResizeStyle.HeaderSize;
       }
-      foreach (ColumnHeader h in new ColumnHeader[] { columnFile, columnSize }) {
+      foreach (ColumnHeader h in new ColumnHeader[] { columnFile, columnSize })
+      {
         h.AutoResize(style);
       }
     }
 
     private void BrowseDest_Click(object sender, EventArgs e)
     {
-      if (!string.IsNullOrEmpty(Dests.Text) && !browsedBefore) {
+      if (!string.IsNullOrEmpty(Dests.Text) && !browsedBefore)
+      {
         BrowseDestDialog.SelectedPath = Dests.Text;
         browsedBefore = true;
       }
-      if (BrowseDestDialog.ShowDialog() == DialogResult.OK) {
+      if (BrowseDestDialog.ShowDialog() == DialogResult.OK)
+      {
         Dests.Add(BrowseDestDialog.SelectedPath);
         DestinationsChanged();
       }
@@ -291,14 +324,16 @@ namespace UnRarIt
 
     private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (updater != null) {
+      if (updater != null)
+      {
         updater.Check(UpdateCheckType.Forced);
       }
     }
 
     private void ClearAllPasswords_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show("Do you really want to clear all passwords?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes) {
+      if (MessageBox.Show("Do you really want to clear all passwords?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+      {
         passwords.Clear();
         RefreshPasswordCount();
       }
@@ -314,40 +349,51 @@ namespace UnRarIt
     {
       var work = new List<string>(paths);
       string rv = null;
-      for (; ; ) {
+      for (; ; )
+      {
         string dn = null;
-        foreach (string p in work) {
+        foreach (string p in work)
+        {
           var cd = Path.GetDirectoryName(p);
-          if (string.IsNullOrEmpty(cd)) {
+          if (string.IsNullOrEmpty(cd))
+          {
             dn = null;
             break;
           }
-          for (; ; ) {
+          for (; ; )
+          {
             var pd = Path.GetDirectoryName(cd);
-            if (string.IsNullOrEmpty(pd)) {
+            if (string.IsNullOrEmpty(pd))
+            {
               break;
             }
             cd = pd;
           }
-          if (dn == null) {
+          if (dn == null)
+          {
             dn = cd;
           }
-          else {
-            if (dn != cd) {
+          else
+          {
+            if (dn != cd)
+            {
               dn = null;
               break;
             }
           }
         }
-        if (dn == null) {
+        if (dn == null)
+        {
           break;
         }
-        if (!string.IsNullOrEmpty(rv)) {
+        if (!string.IsNullOrEmpty(rv))
+        {
           rv += "\\";
         }
         rv += dn;
         work.Clear();
-        foreach (string p in paths) {
+        foreach (string p in paths)
+        {
           work.Add(p.Substring(rv.Length + 1));
         }
         dn = null;
@@ -364,7 +410,8 @@ namespace UnRarIt
     private void CtxClearSelected_Click(object sender, EventArgs e)
     {
       Files.BeginUpdate();
-      foreach (ArchiveItem item in Files.SelectedItems) {
+      foreach (ArchiveItem item in Files.SelectedItems)
+      {
         item.Remove();
       }
       Files.EndUpdate();
@@ -374,7 +421,8 @@ namespace UnRarIt
     private void CtxDeleteFiles_Click(object sender, EventArgs e)
     {
       Files.BeginUpdate();
-      foreach (ArchiveItem item in Files.SelectedItems) {
+      foreach (ArchiveItem item in Files.SelectedItems)
+      {
         item.DeleteFiles();
       }
       Files.EndUpdate();
@@ -383,11 +431,13 @@ namespace UnRarIt
 
     private void CtxOpenDirectory_Click(object sender, EventArgs e)
     {
-      if (Files.SelectedItems.Count == 0) {
+      if (Files.SelectedItems.Count == 0)
+      {
         return;
       }
       var item = Files.SelectedItems[0] as ArchiveItem;
-      if (item == null) {
+      if (item == null)
+      {
         return;
       }
       Process.Start(item.BaseDirectory.FullName);
@@ -396,16 +446,18 @@ namespace UnRarIt
     private void DecompressDirectory_Click(object sender, EventArgs e)
     {
       AddFiles((from s in new DirectoryInfo(Dests.Text).GetFiles()
-                                    select s.FullName).ToArray());
+                select s.FullName).ToArray());
       UnRarIt_Click(sender, e);
     }
 
     private void DestinationsChanged()
     {
-      if (!(UnrarIt.Enabled = Dests.Items.Count > 0)) {
+      if (!(UnrarIt.Enabled = Dests.Items.Count > 0))
+      {
         GroupDest.ForeColor = Color.Red;
       }
-      else {
+      else
+      {
         GroupDest.ForeColor = SystemColors.ControlText;
       }
     }
@@ -417,19 +469,22 @@ namespace UnRarIt
 
     private void ExportPasswords_Click(object sender, EventArgs e)
     {
-      if (ExportDialog.ShowDialog() == DialogResult.OK) {
+      if (ExportDialog.ShowDialog() == DialogResult.OK)
+      {
         passwords.SaveToFile(ExportDialog.FileName);
       }
     }
 
     private void Files_DragDrop(object sender, DragEventArgs e)
     {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop)) {
+      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+      {
         return;
       }
 
       var dropped = e.Data.GetData(DataFormats.FileDrop) as string[];
-      if (dropped.Length == 0) {
+      if (dropped.Length == 0)
+      {
         return;
       }
       AddFiles(dropped);
@@ -442,11 +497,14 @@ namespace UnRarIt
 
     private void Files_KeyDown(object sender, KeyEventArgs e)
     {
-      if (e.Modifiers == Keys.Control) {
-        switch (e.KeyCode) {
+      if (e.Modifiers == Keys.Control)
+      {
+        switch (e.KeyCode)
+        {
           case Keys.A:
             Files.BeginUpdate();
-            foreach (ListViewItem i in Files.Items) {
+            foreach (ListViewItem i in Files.Items)
+            {
               i.Selected = true;
             }
             Files.EndUpdate();
@@ -462,11 +520,13 @@ namespace UnRarIt
     {
       var hasItems = Files.SelectedItems.Count != 0;
       CtxOpenDirectory.Enabled = hasItems;
-      if (!hasItems) {
+      if (!hasItems)
+      {
         return;
       }
       var item = Files.SelectedItems[0] as ArchiveItem;
-      if (item == null) {
+      if (item == null)
+      {
         CtxOpenDirectory.Enabled = false;
         return;
       }
@@ -477,7 +537,8 @@ namespace UnRarIt
     {
       var task = o as Task;
       string DestsText = GetDest();
-      try {
+      try
+      {
         Invoke(
           new SetStatus(status =>
         {
@@ -496,45 +557,56 @@ namespace UnRarIt
 
 
         var paths = new List<string>();
-        foreach (IArchiveEntry info in task.File) {
-          if (skipper.IsMatch(info.Name)) {
+        foreach (IArchiveEntry info in task.File)
+        {
+          if (skipper.IsMatch(info.Name))
+          {
             continue;
           }
           paths.Add(info.Name);
         }
         var minPath = CommonDirectoryPrefix(paths);
-        if (minPath == null) {
+        if (minPath == null)
+        {
           minPath = string.Empty;
         }
         var basePath = FindBasePath(task, paths.Count, minPath);
 
         var shouldExtract = false;
-        foreach (IArchiveEntry info in task.File) {
-          if (skipper.IsMatch(info.Name)) {
+        foreach (IArchiveEntry info in task.File)
+        {
+          if (skipper.IsMatch(info.Name))
+          {
             continue;
           }
 
           var name = info.Name;
-          if (!string.IsNullOrEmpty(minPath)) {
+          if (!string.IsNullOrEmpty(minPath))
+          {
             name = name.Substring(minPath.Length + 1);
           }
           var rootPath = DestsText;
-          if (task.Item.IsNested) {
+          if (task.Item.IsNested)
+          {
             rootPath = task.File.Archive.Directory.FullName;
           }
           var baseDirectory = new DirectoryInfo(Replacements.CombinePath(rootPath, basePath));
-          if (!string.IsNullOrEmpty(basePath) && (OverwriteAction)Config.OverwriteAction == OverwriteAction.RenameDirectory) {
+          if (!string.IsNullOrEmpty(basePath) && (OverwriteAction)Config.OverwriteAction == OverwriteAction.RenameDirectory)
+          {
             baseDirectory = MakeUnique(baseDirectory);
           }
           task.Item.BaseDirectory = baseDirectory;
 
           FileInfo dest;
           var destPath = Replacements.CombinePath(baseDirectory.FullName, name);
-          try {
+          try
+          {
             dest = new FileInfo(destPath);
           }
-          catch (NotSupportedException) {
-            if (!silentSkip.IsMatch(destPath)) {
+          catch (NotSupportedException)
+          {
+            if (!silentSkip.IsMatch(destPath))
+            {
               Invoke(new InvokeVoidDelegate(() =>
               {
                 MessageBox.Show(this, String.Format(CultureInfo.CurrentCulture, "Invalid file path: {0}\nSkipping file", destPath));
@@ -544,14 +616,17 @@ namespace UnRarIt
           }
           shouldExtract = SetupExtractDest(task, info, dest);
         }
-        if (shouldExtract) {
+        if (shouldExtract)
+        {
           task.File.Extract();
         }
       }
-      catch (ArchiveException ex) {
+      catch (ArchiveException ex)
+      {
         task.Result = ex.Message;
       }
-      catch (Exception ex) {
+      catch (Exception ex)
+      {
         task.Result = String.Format(CultureInfo.CurrentCulture, "Unexpected: {0} ({1})", ex.Message, typeof(Exception));
       }
       task.Signal.Set();
@@ -560,14 +635,17 @@ namespace UnRarIt
     private bool SetupExtractDest(Task task, IArchiveEntry info, FileInfo dest)
     {
       bool rv = false;
-      if (dest.Exists) {
-        switch ((OverwriteAction)Config.OverwriteAction) {
+      if (dest.Exists)
+      {
+        switch ((OverwriteAction)Config.OverwriteAction)
+        {
           case OverwriteAction.Overwrite:
             info.Destination = dest;
             rv = true;
             break;
           default:
-            switch (OverwritePrompt(task, dest, info)) {
+            switch (OverwritePrompt(task, dest, info))
+            {
               case OverwriteAction.Overwrite:
                 info.Destination = dest;
                 rv = true;
@@ -587,7 +665,8 @@ namespace UnRarIt
             break;
         }
       }
-      else {
+      else
+      {
         rv = true;
         info.Destination = dest;
       }
@@ -607,21 +686,27 @@ namespace UnRarIt
     private static string FindBasePath(Task task, int items, string minPath)
     {
       var basePath = string.Empty;
-      if (items >= Config.OwnDirectoryLimit) {
-        if (!string.IsNullOrEmpty(minPath)) {
+      if (items >= Config.OwnDirectoryLimit)
+      {
+        if (!string.IsNullOrEmpty(minPath))
+        {
           basePath = minPath;
-          for (; ; ) {
+          for (; ; )
+          {
             var p = Path.GetDirectoryName(basePath);
-            if (string.IsNullOrEmpty(p)) {
+            if (string.IsNullOrEmpty(p))
+            {
               break;
             }
             basePath = p;
           }
         }
-        if (string.IsNullOrEmpty(minPath)) {
+        if (string.IsNullOrEmpty(minPath))
+        {
           basePath = trimmer.Replace(task.File.Archive.Name, string.Empty);
           string tmpPath;
-          while ((tmpPath = trimmer.Replace(basePath, string.Empty)) != basePath) {
+          while ((tmpPath = trimmer.Replace(basePath, string.Empty)) != basePath)
+          {
             basePath = tmpPath;
           }
         }
@@ -638,7 +723,8 @@ namespace UnRarIt
           "Update available",
           MessageBoxButtons.YesNo,
           MessageBoxIcon.Information
-          ) == DialogResult.Yes) {
+          ) == DialogResult.Yes)
+      {
         Process.Start(e.InfoUri.ToString());
       }
     }
@@ -651,10 +737,12 @@ namespace UnRarIt
     private void License_Click(object sender, EventArgs e)
     {
       var license = Replacements.CombinePath(Path.GetDirectoryName(Application.ExecutablePath), "license.rtf");
-      if (!File.Exists(license)) {
+      if (!File.Exists(license))
+      {
         MessageBox.Show("License file not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
-      else {
+      else
+      {
         Process.Start(license);
       }
     }
@@ -662,7 +750,8 @@ namespace UnRarIt
     private void Main_FormClosed(object sender, FormClosedEventArgs e)
     {
       Config.Destinations.Clear();
-      foreach (string s in Dests.Items) {
+      foreach (string s in Dests.Items)
+      {
         Config.Destinations.Add(s);
       }
       Config.Save();
@@ -671,14 +760,16 @@ namespace UnRarIt
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e)
     {
-      if ((e.Cancel = running)) {
+      if ((e.Cancel = running))
+      {
         MessageBox.Show("Wait for the operation to complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 
     private void Main_Shown(object sender, EventArgs e)
     {
-      if (auto) {
+      if (auto)
+      {
         auto = false;
         Run();
         Close();
@@ -692,11 +783,13 @@ namespace UnRarIt
 
     private static DirectoryInfo MakeUnique(DirectoryInfo info)
     {
-      if (!info.Exists) {
+      if (!info.Exists)
+      {
         return info;
       }
       var baseName = info.Name;
-      for (var i = 1; info.Exists; ++i) {
+      for (var i = 1; info.Exists; ++i)
+      {
         info = new DirectoryInfo(Replacements.CombinePath(info.Parent.FullName, String.Format(CultureInfo.InvariantCulture, "{0}_{1}", baseName, i)));
       }
 
@@ -705,13 +798,15 @@ namespace UnRarIt
 
     private static FileInfo MakeUnique(FileInfo info)
     {
-      if (!info.Exists) {
+      if (!info.Exists)
+      {
         return info;
       }
       var ext = info.Extension;
       var baseName = info.Name.Substring(0, info.Name.Length - info.Extension.Length);
 
-      for (var i = 1; info.Exists; ++i) {
+      for (var i = 1; info.Exists; ++i)
+      {
         info = new FileInfo(Replacements.CombinePath(info.DirectoryName, String.Format(CultureInfo.CurrentCulture, "{0}_{1}{2}", baseName, i, ext)));
       }
 
@@ -732,13 +827,15 @@ namespace UnRarIt
           aInfo.dest.Length.ToFormattedSize(),
           aInfo.entry.Name,
           aInfo.entry.Size.ToFormattedSize()
-          )) {
+          ))
+      {
         form.Owner = this;
         dr = form.ShowDialog();
         aInfo.Action = form.Action;
       }
 
-      switch (dr) {
+      switch (dr)
+      {
         case DialogResult.Retry:
           aInfo.task.Action = aInfo.Action;
           break;
@@ -753,19 +850,24 @@ namespace UnRarIt
     private OverwriteAction OverwritePrompt(Task task, FileInfo Dest, IArchiveEntry Entry)
     {
       overwritePromptMutex.WaitOne();
-      try {
-        if (task.Action != OverwriteAction.Unspecified) {
+      try
+      {
+        if (task.Action != OverwriteAction.Unspecified)
+        {
           return task.Action;
         }
-        if (actionRemembered != OverwriteAction.Unspecified) {
+        if (actionRemembered != OverwriteAction.Unspecified)
+        {
           return actionRemembered;
         }
-        using (var oi = new OverwritePromptInfo(task, Dest, Entry)) {
+        using (var oi = new OverwritePromptInfo(task, Dest, Entry))
+        {
           Invoke(new OverwriteExecuteDelegate(OverwriteExecute), oi);
           return oi.Action;
         }
       }
-      finally {
+      finally
+      {
         overwritePromptMutex.ReleaseMutex();
       }
     }
@@ -777,8 +879,10 @@ namespace UnRarIt
 
     private void requeueFailedToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      foreach (ListViewItem item in Files.Items) {
-        if (item.StateImageIndex == 2) {
+      foreach (ListViewItem item in Files.Items)
+      {
+        if (item.StateImageIndex == 2)
+        {
           item.StateImageIndex = 0;
         }
       }
@@ -787,7 +891,8 @@ namespace UnRarIt
     private void requeueToolStripMenuItem_Click(object sender, EventArgs e)
     {
       Files.BeginUpdate();
-      foreach (ArchiveItem item in Files.SelectedItems) {
+      foreach (ArchiveItem item in Files.SelectedItems)
+      {
         item.StateImageIndex = 0;
       }
       Files.EndUpdate();
@@ -795,6 +900,22 @@ namespace UnRarIt
 
     private void Run()
     {
+      //Update passwords from PasswordFile
+      if (!String.IsNullOrEmpty(Config.PasswordFile.Trim()) && System.IO.File.Exists(Config.PasswordFile.Trim()))
+      {
+        try
+        {
+          passwords.AddFromFile(Config.PasswordFile);
+          RefreshPasswordCount();
+        }
+        catch
+        {
+          MessageBox.Show("Failed to refresh the password list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+      }
+
+
       actionRemembered = OverwriteAction.Unspecified;
 
       running = true;
@@ -840,7 +961,8 @@ namespace UnRarIt
 
     private void RunTasks(int threads)
     {
-      for (var rerun = true; rerun && !stopped && !aborted; ) {
+      for (var rerun = true; rerun && !stopped && !aborted;)
+      {
         rerun = false;
 
         var tasks = CollectTasks();
@@ -849,8 +971,10 @@ namespace UnRarIt
 
         Progress.Maximum += tasks.Count;
 
-        for (; ; ) {
-          while (!aborted && !stopped && runningTasks.Count < threads && taskEnumerator.MoveNext()) {
+        for (; ; )
+        {
+          while (!aborted && !stopped && runningTasks.Count < threads && taskEnumerator.MoveNext())
+          {
             var task = taskEnumerator.Current;
             task.Item.StateImageIndex = 3;
             task.Item.Status = "Processing...";
@@ -858,29 +982,36 @@ namespace UnRarIt
             thread.Start(task);
             runningTasks[task.Signal] = task;
           }
-          if (runningTasks.Count == 0) {
+          if (runningTasks.Count == 0)
+          {
             break;
           }
           var handles = new List<AutoResetEvent>(runningTasks.Keys).ToArray();
           var idx = WaitHandle.WaitAny(handles, 100);
-          if (idx != WaitHandle.WaitTimeout) {
+          if (idx != WaitHandle.WaitTimeout)
+          {
             var evt = handles[idx];
             var task = runningTasks[evt];
             runningTasks.Remove(evt);
-            if (aborted) {
+            if (aborted)
+            {
               task.Item.Status = "Aborted";
               task.Item.StateImageIndex = 2;
 
               continue;
             }
-            if (string.IsNullOrEmpty(task.Result)) {
-              if (!string.IsNullOrEmpty(task.File.Password)) {
+            if (string.IsNullOrEmpty(task.Result))
+            {
+              if (!string.IsNullOrEmpty(task.File.Password))
+              {
                 passwords.SetGood(task.File.Password);
               }
-              try {
+              try
+              {
                 task.Item.ExcuteSuccessAction();
               }
-              catch (Exception ex) {
+              catch (Exception ex)
+              {
                 MessageBox.Show("Failed to rename/delete file:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
               }
               task.Item.Checked = true;
@@ -896,7 +1027,8 @@ namespace UnRarIt
               task.Item.StateImageIndex = 1;
               AdjustHeaders();
             }
-            else {
+            else
+            {
               task.Item.Status = String.Format(
                 CultureInfo.CurrentCulture,
                 "Error, {0}{1}",
@@ -908,7 +1040,8 @@ namespace UnRarIt
               task.Item.StateImageIndex = 2;
               AdjustHeaders();
             }
-            if (Config.Nesting) {
+            if (Config.Nesting)
+            {
               rerun = AddFiles(task.Files.ToArray(), true) || rerun;
             }
             task.Dispose();
@@ -917,21 +1050,26 @@ namespace UnRarIt
           Application.DoEvents();
         }
 
-        if (!aborted) {
+        if (!aborted)
+        {
           Files.BeginUpdate();
-          switch (Config.EmptyListWhenDone) {
+          switch (Config.EmptyListWhenDone)
+          {
             case 1:
               Files.Clear();
               break;
             case 2:
               var idx = new List<int>();
-              foreach (ArchiveItem i in Files.Items) {
-                if (i.StateImageIndex == 1) {
+              foreach (ArchiveItem i in Files.Items)
+              {
+                if (i.StateImageIndex == 1)
+                {
                   idx.Add(i.Index);
                 }
               }
               idx.Reverse();
-              foreach (int i in idx) {
+              foreach (int i in idx)
+              {
                 Files.Items.RemoveAt(i);
               }
               break;
@@ -947,14 +1085,18 @@ namespace UnRarIt
     {
       var tasks = new List<Task>();
 
-      foreach (ArchiveItem i in Files.Items) {
-        if (aborted || stopped) {
+      foreach (ArchiveItem i in Files.Items)
+      {
+        if (aborted || stopped)
+        {
           break;
         }
-        if (i.StateImageIndex != 0) {
+        if (i.StateImageIndex != 0)
+        {
           continue;
         }
-        if (!File.Exists(i.FileName)) {
+        if (!File.Exists(i.FileName))
+        {
           i.Status = "Error, File not found";
           i.StateImageIndex = 2;
           continue;
@@ -1031,37 +1173,43 @@ namespace UnRarIt
 
       public ulong ExtractedFiles
       {
-        get {
+        get
+        {
           return extractedFiles;
         }
       }
       public IArchiveFile File
       {
-        get {
+        get
+        {
           return file;
         }
       }
       public List<string> Files
       {
-        get {
+        get
+        {
           return files;
         }
       }
       public ArchiveItem Item
       {
-        get {
+        get
+        {
           return item;
         }
       }
       public AutoResetEvent Signal
       {
-        get {
+        get
+        {
           return signal;
         }
       }
       public ulong UnpackedSize
       {
-        get {
+        get
+        {
           return unpackedSize;
         }
       }
@@ -1078,7 +1226,8 @@ namespace UnRarIt
         }),
           String.Format(CultureInfo.CurrentCulture, "Extracting - {0}", fn)
         );
-        if (e.Stage == ExtractionStage.Done) {
+        if (e.Stage == ExtractionStage.Done)
+        {
           unpackedSize += e.Item.Size;
           extractedFiles++;
         }

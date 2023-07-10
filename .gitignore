@@ -12,3 +12,4 @@ Release/
 Debug/
 ipch/
 packages/
+/.vs

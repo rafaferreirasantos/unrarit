@@ -26,5 +26,8 @@
     <Setting Name="Priority" Type="UnRarIt.Interop.ThreadIOPriority" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
+    <Setting Name="PasswordFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
