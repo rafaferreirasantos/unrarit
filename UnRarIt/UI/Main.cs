@@ -445,7 +445,9 @@ namespace UnRarIt
 
     private void DecompressDirectory_Click(object sender, EventArgs e)
     {
-      AddFiles((from s in new DirectoryInfo(Dests.Text).GetFiles()
+      AddFiles((from s in 
+                    new DirectoryInfo(!String.IsNullOrEmpty(Config.DefaultSourceDir) ? Config.DefaultSourceDir : Dests.Text)
+                    .GetFiles() 
                 select s.FullName).ToArray());
       UnRarIt_Click(sender, e);
     }

@@ -129,5 +129,14 @@ namespace UnRarIt
         Config.PasswordFile = lblPassFile.Text;
       }
     }
+
+    private void btnDefaultSourceFolderSearch_Click(object sender, EventArgs e)
+    {
+      if (BrowserDialog.ShowDialog() == DialogResult.OK)
+      {
+        lblDefaultSourceFolder.Text = BrowserDialog.SelectedPath;
+        Config.DefaultSourceDir = lblDefaultSourceFolder.Text;
+      }
+    }
   }
 }

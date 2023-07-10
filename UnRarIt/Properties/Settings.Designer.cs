@@ -130,5 +130,17 @@ namespace UnRarIt.Properties {
                 this["PasswordFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultSourceDir {
+            get {
+                return ((string)(this["DefaultSourceDir"]));
+            }
+            set {
+                this["DefaultSourceDir"] = value;
+            }
+        }
     }
 }

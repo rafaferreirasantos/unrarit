@@ -53,9 +53,13 @@
       this.label2 = new System.Windows.Forms.Label();
       this.Threads = new System.Windows.Forms.NumericUpDown();
       this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.btnPassFileSearch = new System.Windows.Forms.Button();
       this.lblPassFile = new System.Windows.Forms.Label();
       this.OpenDialog = new System.Windows.Forms.OpenFileDialog();
-      this.btnPassFileSearch = new System.Windows.Forms.Button();
+      this.groupBox7 = new System.Windows.Forms.GroupBox();
+      this.btnDefaultSourceFolderSearch = new System.Windows.Forms.Button();
+      this.lblDefaultSourceFolder = new System.Windows.Forms.Label();
+      this.BrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
       this.groupBox1.SuspendLayout();
       this.groupBox2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.OwnDirectoryLimit)).BeginInit();
@@ -64,16 +68,16 @@
       this.groupBox5.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.Threads)).BeginInit();
       this.groupBox6.SuspendLayout();
+      this.groupBox7.SuspendLayout();
       this.SuspendLayout();
       // 
       // buttonCancel
       // 
       this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.buttonCancel.Location = new System.Drawing.Point(457, 375);
-      this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.buttonCancel.Location = new System.Drawing.Point(343, 368);
       this.buttonCancel.Name = "buttonCancel";
-      this.buttonCancel.Size = new System.Drawing.Size(100, 28);
+      this.buttonCancel.Size = new System.Drawing.Size(75, 23);
       this.buttonCancel.TabIndex = 0;
       this.buttonCancel.Text = "Cancel";
       this.buttonCancel.UseVisualStyleBackColor = true;
@@ -82,10 +86,9 @@
       // buttonOK
       // 
       this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonOK.Location = new System.Drawing.Point(349, 375);
-      this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.buttonOK.Location = new System.Drawing.Point(262, 368);
       this.buttonOK.Name = "buttonOK";
-      this.buttonOK.Size = new System.Drawing.Size(100, 28);
+      this.buttonOK.Size = new System.Drawing.Size(75, 23);
       this.buttonOK.TabIndex = 1;
       this.buttonOK.Text = "OK";
       this.buttonOK.UseVisualStyleBackColor = true;
@@ -98,11 +101,9 @@
       this.groupBox1.Controls.Add(this.Ask);
       this.groupBox1.Controls.Add(this.Overwrite);
       this.groupBox1.Controls.Add(this.Skip);
-      this.groupBox1.Location = new System.Drawing.Point(16, 15);
-      this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.groupBox1.Location = new System.Drawing.Point(12, 12);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.groupBox1.Size = new System.Drawing.Size(267, 146);
+      this.groupBox1.Size = new System.Drawing.Size(200, 119);
       this.groupBox1.TabIndex = 2;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "When a file exists...";
@@ -110,10 +111,9 @@
       // RenameDirectory
       // 
       this.RenameDirectory.AutoSize = true;
-      this.RenameDirectory.Location = new System.Drawing.Point(117, 80);
-      this.RenameDirectory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.RenameDirectory.Location = new System.Drawing.Point(88, 65);
       this.RenameDirectory.Name = "RenameDirectory";
-      this.RenameDirectory.Size = new System.Drawing.Size(82, 20);
+      this.RenameDirectory.Size = new System.Drawing.Size(67, 17);
       this.RenameDirectory.TabIndex = 5;
       this.RenameDirectory.TabStop = true;
       this.RenameDirectory.Text = "Directory";
@@ -122,10 +122,9 @@
       // Rename
       // 
       this.Rename.AutoSize = true;
-      this.Rename.Location = new System.Drawing.Point(23, 80);
-      this.Rename.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Rename.Location = new System.Drawing.Point(17, 65);
       this.Rename.Name = "Rename";
-      this.Rename.Size = new System.Drawing.Size(80, 20);
+      this.Rename.Size = new System.Drawing.Size(65, 17);
       this.Rename.TabIndex = 4;
       this.Rename.TabStop = true;
       this.Rename.Text = "Rename";
@@ -134,10 +133,9 @@
       // Ask
       // 
       this.Ask.AutoSize = true;
-      this.Ask.Location = new System.Drawing.Point(23, 108);
-      this.Ask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Ask.Location = new System.Drawing.Point(17, 88);
       this.Ask.Name = "Ask";
-      this.Ask.Size = new System.Drawing.Size(51, 20);
+      this.Ask.Size = new System.Drawing.Size(43, 17);
       this.Ask.TabIndex = 3;
       this.Ask.TabStop = true;
       this.Ask.Text = "Ask";
@@ -146,10 +144,9 @@
       // Overwrite
       // 
       this.Overwrite.AutoSize = true;
-      this.Overwrite.Location = new System.Drawing.Point(23, 52);
-      this.Overwrite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Overwrite.Location = new System.Drawing.Point(17, 42);
       this.Overwrite.Name = "Overwrite";
-      this.Overwrite.Size = new System.Drawing.Size(84, 20);
+      this.Overwrite.Size = new System.Drawing.Size(70, 17);
       this.Overwrite.TabIndex = 2;
       this.Overwrite.TabStop = true;
       this.Overwrite.Text = "Overwrite";
@@ -158,10 +155,9 @@
       // Skip
       // 
       this.Skip.AutoSize = true;
-      this.Skip.Location = new System.Drawing.Point(23, 23);
-      this.Skip.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Skip.Location = new System.Drawing.Point(17, 19);
       this.Skip.Name = "Skip";
-      this.Skip.Size = new System.Drawing.Size(55, 20);
+      this.Skip.Size = new System.Drawing.Size(46, 17);
       this.Skip.TabIndex = 1;
       this.Skip.TabStop = true;
       this.Skip.Text = "Skip";
@@ -172,11 +168,9 @@
       this.groupBox2.Controls.Add(this.Nesting);
       this.groupBox2.Controls.Add(this.label1);
       this.groupBox2.Controls.Add(this.OwnDirectoryLimit);
-      this.groupBox2.Location = new System.Drawing.Point(16, 169);
-      this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.groupBox2.Location = new System.Drawing.Point(12, 137);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.groupBox2.Size = new System.Drawing.Size(267, 135);
+      this.groupBox2.Size = new System.Drawing.Size(200, 110);
       this.groupBox2.TabIndex = 3;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Directories and archives...";
@@ -184,29 +178,26 @@
       // Nesting
       // 
       this.Nesting.AutoSize = true;
-      this.Nesting.Location = new System.Drawing.Point(23, 102);
-      this.Nesting.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Nesting.Location = new System.Drawing.Point(17, 83);
       this.Nesting.Name = "Nesting";
-      this.Nesting.Size = new System.Drawing.Size(167, 20);
+      this.Nesting.Size = new System.Drawing.Size(137, 17);
       this.Nesting.TabIndex = 7;
       this.Nesting.Text = "Extract nested archives";
       this.Nesting.UseVisualStyleBackColor = true;
       // 
       // label1
       // 
-      this.label1.Location = new System.Drawing.Point(19, 28);
-      this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.label1.Location = new System.Drawing.Point(14, 23);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(180, 65);
+      this.label1.Size = new System.Drawing.Size(135, 53);
       this.label1.TabIndex = 1;
       this.label1.Text = "Create a directory when more than this files aren\'t contained within a directory";
       // 
       // OwnDirectoryLimit
       // 
-      this.OwnDirectoryLimit.Location = new System.Drawing.Point(207, 28);
-      this.OwnDirectoryLimit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.OwnDirectoryLimit.Location = new System.Drawing.Point(155, 23);
       this.OwnDirectoryLimit.Name = "OwnDirectoryLimit";
-      this.OwnDirectoryLimit.Size = new System.Drawing.Size(52, 22);
+      this.OwnDirectoryLimit.Size = new System.Drawing.Size(39, 20);
       this.OwnDirectoryLimit.TabIndex = 0;
       // 
       // groupBox3
@@ -214,11 +205,9 @@
       this.groupBox3.Controls.Add(this.SuccessRemove);
       this.groupBox3.Controls.Add(this.SuccessRename);
       this.groupBox3.Controls.Add(this.SuccesNothing);
-      this.groupBox3.Location = new System.Drawing.Point(291, 15);
-      this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.groupBox3.Location = new System.Drawing.Point(218, 12);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.groupBox3.Size = new System.Drawing.Size(267, 146);
+      this.groupBox3.Size = new System.Drawing.Size(200, 119);
       this.groupBox3.TabIndex = 4;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Processed archives will be...";
@@ -226,10 +215,9 @@
       // SuccessRemove
       // 
       this.SuccessRemove.AutoSize = true;
-      this.SuccessRemove.Location = new System.Drawing.Point(23, 80);
-      this.SuccessRemove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.SuccessRemove.Location = new System.Drawing.Point(17, 65);
       this.SuccessRemove.Name = "SuccessRemove";
-      this.SuccessRemove.Size = new System.Drawing.Size(74, 20);
+      this.SuccessRemove.Size = new System.Drawing.Size(60, 17);
       this.SuccessRemove.TabIndex = 3;
       this.SuccessRemove.TabStop = true;
       this.SuccessRemove.Text = "deleted";
@@ -238,10 +226,9 @@
       // SuccessRename
       // 
       this.SuccessRename.AutoSize = true;
-      this.SuccessRename.Location = new System.Drawing.Point(23, 52);
-      this.SuccessRename.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.SuccessRename.Location = new System.Drawing.Point(17, 42);
       this.SuccessRename.Name = "SuccessRename";
-      this.SuccessRename.Size = new System.Drawing.Size(82, 20);
+      this.SuccessRename.Size = new System.Drawing.Size(66, 17);
       this.SuccessRename.TabIndex = 2;
       this.SuccessRename.TabStop = true;
       this.SuccessRename.Text = "renamed";
@@ -250,10 +237,9 @@
       // SuccesNothing
       // 
       this.SuccesNothing.AutoSize = true;
-      this.SuccesNothing.Location = new System.Drawing.Point(23, 23);
-      this.SuccesNothing.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.SuccesNothing.Location = new System.Drawing.Point(17, 19);
       this.SuccesNothing.Name = "SuccesNothing";
-      this.SuccesNothing.Size = new System.Drawing.Size(82, 20);
+      this.SuccesNothing.Size = new System.Drawing.Size(68, 17);
       this.SuccesNothing.TabIndex = 1;
       this.SuccesNothing.TabStop = true;
       this.SuccesNothing.Text = "left alone";
@@ -264,11 +250,9 @@
       this.groupBox4.Controls.Add(this.RemoveAll);
       this.groupBox4.Controls.Add(this.RemoveDone);
       this.groupBox4.Controls.Add(this.RemoveNone);
-      this.groupBox4.Location = new System.Drawing.Point(291, 169);
-      this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.groupBox4.Location = new System.Drawing.Point(218, 137);
       this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.groupBox4.Size = new System.Drawing.Size(267, 123);
+      this.groupBox4.Size = new System.Drawing.Size(200, 100);
       this.groupBox4.TabIndex = 5;
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Remove on completion...";
@@ -276,10 +260,9 @@
       // RemoveAll
       // 
       this.RemoveAll.AutoSize = true;
-      this.RemoveAll.Location = new System.Drawing.Point(23, 80);
-      this.RemoveAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.RemoveAll.Location = new System.Drawing.Point(17, 65);
       this.RemoveAll.Name = "RemoveAll";
-      this.RemoveAll.Size = new System.Drawing.Size(79, 20);
+      this.RemoveAll.Size = new System.Drawing.Size(64, 17);
       this.RemoveAll.TabIndex = 6;
       this.RemoveAll.TabStop = true;
       this.RemoveAll.Text = "Clear list";
@@ -288,10 +271,9 @@
       // RemoveDone
       // 
       this.RemoveDone.AutoSize = true;
-      this.RemoveDone.Location = new System.Drawing.Point(23, 52);
-      this.RemoveDone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.RemoveDone.Location = new System.Drawing.Point(17, 42);
       this.RemoveDone.Name = "RemoveDone";
-      this.RemoveDone.Size = new System.Drawing.Size(138, 20);
+      this.RemoveDone.Size = new System.Drawing.Size(113, 17);
       this.RemoveDone.TabIndex = 5;
       this.RemoveDone.TabStop = true;
       this.RemoveDone.Text = "Extracted archives";
@@ -300,10 +282,9 @@
       // RemoveNone
       // 
       this.RemoveNone.AutoSize = true;
-      this.RemoveNone.Location = new System.Drawing.Point(23, 23);
-      this.RemoveNone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.RemoveNone.Location = new System.Drawing.Point(17, 19);
       this.RemoveNone.Name = "RemoveNone";
-      this.RemoveNone.Size = new System.Drawing.Size(112, 20);
+      this.RemoveNone.Size = new System.Drawing.Size(91, 17);
       this.RemoveNone.TabIndex = 4;
       this.RemoveNone.TabStop = true;
       this.RemoveNone.Text = "No items at all";
@@ -314,11 +295,9 @@
       this.groupBox5.Controls.Add(this.LowPriority);
       this.groupBox5.Controls.Add(this.label2);
       this.groupBox5.Controls.Add(this.Threads);
-      this.groupBox5.Location = new System.Drawing.Point(16, 311);
-      this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.groupBox5.Location = new System.Drawing.Point(12, 253);
       this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.groupBox5.Size = new System.Drawing.Size(265, 94);
+      this.groupBox5.Size = new System.Drawing.Size(199, 104);
       this.groupBox5.TabIndex = 9;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Performance";
@@ -326,10 +305,9 @@
       // LowPriority
       // 
       this.LowPriority.AutoSize = true;
-      this.LowPriority.Location = new System.Drawing.Point(23, 57);
-      this.LowPriority.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.LowPriority.Location = new System.Drawing.Point(17, 46);
       this.LowPriority.Name = "LowPriority";
-      this.LowPriority.Size = new System.Drawing.Size(117, 20);
+      this.LowPriority.Size = new System.Drawing.Size(99, 17);
       this.LowPriority.TabIndex = 12;
       this.LowPriority.Text = "Low I/O Priority";
       this.LowPriority.UseVisualStyleBackColor = true;
@@ -337,40 +315,48 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(19, 26);
-      this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.label2.Location = new System.Drawing.Point(14, 21);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(123, 16);
+      this.label2.Size = new System.Drawing.Size(98, 13);
       this.label2.TabIndex = 10;
       this.label2.Text = "Number of Threads";
       // 
       // Threads
       // 
-      this.Threads.Location = new System.Drawing.Point(205, 23);
-      this.Threads.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Threads.Location = new System.Drawing.Point(154, 19);
       this.Threads.Name = "Threads";
-      this.Threads.Size = new System.Drawing.Size(52, 22);
+      this.Threads.Size = new System.Drawing.Size(39, 20);
       this.Threads.TabIndex = 9;
       // 
       // groupBox6
       // 
       this.groupBox6.Controls.Add(this.btnPassFileSearch);
       this.groupBox6.Controls.Add(this.lblPassFile);
-      this.groupBox6.Location = new System.Drawing.Point(293, 300);
-      this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
+      this.groupBox6.Location = new System.Drawing.Point(218, 243);
       this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
-      this.groupBox6.Size = new System.Drawing.Size(267, 67);
+      this.groupBox6.Size = new System.Drawing.Size(200, 54);
       this.groupBox6.TabIndex = 7;
       this.groupBox6.TabStop = false;
-      this.groupBox6.Text = "Pass File...";
+      this.groupBox6.Text = "Pass File:";
+      // 
+      // btnPassFileSearch
+      // 
+      this.btnPassFileSearch.Location = new System.Drawing.Point(139, 27);
+      this.btnPassFileSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.btnPassFileSearch.Name = "btnPassFileSearch";
+      this.btnPassFileSearch.Size = new System.Drawing.Size(56, 19);
+      this.btnPassFileSearch.TabIndex = 1;
+      this.btnPassFileSearch.Text = "Search";
+      this.btnPassFileSearch.UseVisualStyleBackColor = true;
+      this.btnPassFileSearch.Click += new System.EventHandler(this.btnPassFileSearch_Click);
       // 
       // lblPassFile
       // 
       this.lblPassFile.AutoSize = true;
-      this.lblPassFile.Location = new System.Drawing.Point(18, 34);
+      this.lblPassFile.Location = new System.Drawing.Point(14, 28);
+      this.lblPassFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.lblPassFile.Name = "lblPassFile";
-      this.lblPassFile.Size = new System.Drawing.Size(100, 16);
+      this.lblPassFile.Size = new System.Drawing.Size(80, 13);
       this.lblPassFile.TabIndex = 0;
       this.lblPassFile.Text = "No file selected";
       // 
@@ -378,23 +364,50 @@
       // 
       this.OpenDialog.Filter = "Text Files|*.txt|All Files|*.*";
       // 
-      // btnPassFileSearch
+      // groupBox7
       // 
-      this.btnPassFileSearch.Location = new System.Drawing.Point(185, 33);
-      this.btnPassFileSearch.Name = "btnPassFileSearch";
-      this.btnPassFileSearch.Size = new System.Drawing.Size(75, 23);
-      this.btnPassFileSearch.TabIndex = 1;
-      this.btnPassFileSearch.Text = "Search";
-      this.btnPassFileSearch.UseVisualStyleBackColor = true;
-      this.btnPassFileSearch.Click += new System.EventHandler(this.btnPassFileSearch_Click);
+      this.groupBox7.Controls.Add(this.btnDefaultSourceFolderSearch);
+      this.groupBox7.Controls.Add(this.lblDefaultSourceFolder);
+      this.groupBox7.Location = new System.Drawing.Point(218, 303);
+      this.groupBox7.Name = "groupBox7";
+      this.groupBox7.Size = new System.Drawing.Size(200, 54);
+      this.groupBox7.TabIndex = 8;
+      this.groupBox7.TabStop = false;
+      this.groupBox7.Text = "Default Source Folder:";
+      // 
+      // btnDefaultSourceFolderSearch
+      // 
+      this.btnDefaultSourceFolderSearch.Location = new System.Drawing.Point(139, 27);
+      this.btnDefaultSourceFolderSearch.Margin = new System.Windows.Forms.Padding(2);
+      this.btnDefaultSourceFolderSearch.Name = "btnDefaultSourceFolderSearch";
+      this.btnDefaultSourceFolderSearch.Size = new System.Drawing.Size(56, 19);
+      this.btnDefaultSourceFolderSearch.TabIndex = 1;
+      this.btnDefaultSourceFolderSearch.Text = "Search";
+      this.btnDefaultSourceFolderSearch.UseVisualStyleBackColor = true;
+      this.btnDefaultSourceFolderSearch.Click += new System.EventHandler(this.btnDefaultSourceFolderSearch_Click);
+      // 
+      // lblDefaultSourceFolder
+      // 
+      this.lblDefaultSourceFolder.AutoSize = true;
+      this.lblDefaultSourceFolder.Location = new System.Drawing.Point(14, 28);
+      this.lblDefaultSourceFolder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.lblDefaultSourceFolder.Name = "lblDefaultSourceFolder";
+      this.lblDefaultSourceFolder.Size = new System.Drawing.Size(80, 13);
+      this.lblDefaultSourceFolder.TabIndex = 0;
+      this.lblDefaultSourceFolder.Text = "No file selected";
+      // 
+      // BrowserDialog
+      // 
+      this.BrowserDialog.SelectedPath = "v";
       // 
       // SettingsForm
       // 
       this.AcceptButton = this.buttonOK;
-      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.buttonCancel;
-      this.ClientSize = new System.Drawing.Size(573, 414);
+      this.ClientSize = new System.Drawing.Size(430, 399);
+      this.Controls.Add(this.groupBox7);
       this.Controls.Add(this.groupBox6);
       this.Controls.Add(this.groupBox5);
       this.Controls.Add(this.groupBox4);
@@ -403,7 +416,6 @@
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.buttonOK);
       this.Controls.Add(this.buttonCancel);
-      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "SettingsForm";
@@ -425,6 +437,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.Threads)).EndInit();
       this.groupBox6.ResumeLayout(false);
       this.groupBox6.PerformLayout();
+      this.groupBox7.ResumeLayout(false);
+      this.groupBox7.PerformLayout();
       this.ResumeLayout(false);
 
         }
@@ -459,5 +473,9 @@
     private System.Windows.Forms.Label lblPassFile;
     private System.Windows.Forms.OpenFileDialog OpenDialog;
     private System.Windows.Forms.Button btnPassFileSearch;
+    private System.Windows.Forms.GroupBox groupBox7;
+    private System.Windows.Forms.Button btnDefaultSourceFolderSearch;
+    private System.Windows.Forms.Label lblDefaultSourceFolder;
+    private System.Windows.Forms.FolderBrowserDialog BrowserDialog;
   }
 }
