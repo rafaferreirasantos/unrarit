@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using UnRarIt.Properties;
 
 namespace UnRarIt.Utilities
 {
@@ -12,11 +14,14 @@ namespace UnRarIt.Utilities
     private bool dirty = false;
 
     private readonly FileInfo file;
-
     private readonly List<Password> passwords = new List<Password>();
-
     private readonly Dictionary<string, Password> used = new Dictionary<string, Password>();
-
+    public int Length
+    {
+      get {
+        return passwords.Count;
+      }
+    }
 
     public PasswordList()
     {
@@ -28,15 +33,54 @@ namespace UnRarIt.Utilities
       dirty = false;
     }
 
-
-    public int Length
+    IEnumerator IEnumerable.GetEnumerator()
     {
-      get {
-        return passwords.Count;
-      }
+      return new PassWordEnumerator(used.Keys, passwords);
     }
 
+    IEnumerator<string> IEnumerable<string>.GetEnumerator()
+    {
+      return new PassWordEnumerator(used.Keys, passwords);
+    }
 
+    private void Load()
+    {
+      passwords.Clear();
+      if (!file.Exists) {
+        return;
+      }
+      try {
+        using (var r = new StreamReader(file.FullName, Encoding.UTF8)) {
+          AddFromStream(r);
+        }
+      }
+      catch (IOException) {
+      }
+    }
+    private void SaveToStream(Stream stream)
+    {
+      stream.SetLength(0);
+      using (var w = new StreamWriter(stream, Encoding.UTF8)) {
+        foreach (Password p in passwords) {
+          if (Settings.Default.PasswordExportDetailed) 
+          {
+                      w.WriteLine("{0}\t{1}\t{2}", p.Pass, p.Count, p.LastUsed);
+          }
+          else
+          {
+                      w.WriteLine("{0}", p.Pass);
+          }
+        }
+      }
+    }
+    public void AddFromFile(string aFile)
+    {
+      using (var r = new StreamReader(aFile, Encoding.UTF8)) {
+        AddFromStream(r);
+        dirty = true;
+        Save();
+      }
+    }
     private void AddFromStream(StreamReader r)
     {
       string line;
@@ -73,64 +117,16 @@ namespace UnRarIt.Utilities
       }
       passwords.Sort();
     }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-      return new PassWordEnumerator(used.Keys, passwords);
-    }
-
-    IEnumerator<string> IEnumerable<string>.GetEnumerator()
-    {
-      return new PassWordEnumerator(used.Keys, passwords);
-    }
-
-    private void Load()
-    {
-      passwords.Clear();
-      if (!file.Exists) {
-        return;
-      }
-      try {
-        using (var r = new StreamReader(file.FullName, Encoding.UTF8)) {
-          AddFromStream(r);
-        }
-      }
-      catch (IOException) {
-      }
-    }
-
-    private void SaveToStream(Stream stream)
-    {
-      stream.SetLength(0);
-      using (var w = new StreamWriter(stream, Encoding.UTF8)) {
-        foreach (Password p in passwords) {
-          w.WriteLine("{0}\t{1}\t{2}", p.Pass, p.Count, p.LastUsed);
-        }
-      }
-    }
-
-
-    public void AddFromFile(string aFile)
-    {
-      using (var r = new StreamReader(aFile, Encoding.UTF8)) {
-        AddFromStream(r);
-        dirty = true;
-        Save();
-      }
-    }
-
     public void Clear()
     {
       passwords.Clear();
       dirty = true;
       Save();
     }
-
     public void Dispose()
     {
       Save();
     }
-
     public void Save()
     {
       if (!dirty) {
@@ -151,14 +147,12 @@ namespace UnRarIt.Utilities
       }
       dirty = false;
     }
-
     public void SaveToFile(string aFile)
     {
       using (Stream stream = new FileStream(aFile, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read, 1 << 19)) {
         SaveToStream(stream);
       }
     }
-
     public void SetGood(string password)
     {
       dirty = true;
@@ -171,19 +165,14 @@ namespace UnRarIt.Utilities
       }
     }
 
-
     private sealed class Password : IComparable<Password>, IEquatable<Password>
     {
       private readonly static int baseStamp = GetStamp();
 
       private uint count;
-
       private int lastUsed;
-
       private readonly string password;
-
       private long score;
-
 
       public Password(string aPassword)
       {
@@ -199,7 +188,6 @@ namespace UnRarIt.Utilities
         lastUsed = aLastUsed;
         setScore();
       }
-
 
       public uint Count
       {
@@ -220,19 +208,15 @@ namespace UnRarIt.Utilities
         }
       }
 
-
       private static int GetStamp()
       {
         return (DateTime.Now.Year * 100) + DateTime.Now.Month;
       }
-
       private void setScore()
       {
         score = 200 - Math.Min(200, Math.Max(0, (int)baseStamp - lastUsed));
         score += count * score;
       }
-
-
       public int CompareTo(Password other)
       {
         if (other == null) {
@@ -246,7 +230,6 @@ namespace UnRarIt.Utilities
         }
         return StringComparer.InvariantCulture.Compare(password, other.password);
       }
-
       public bool Equals(Password other)
       {
         if (other == null) {
@@ -254,13 +237,11 @@ namespace UnRarIt.Utilities
         }
         return password == other.password;
       }
-
       public void Mark()
       {
         count++;
         lastUsed = baseStamp;
       }
-
       public void Merge(Password pass)
       {
         count += pass.count;

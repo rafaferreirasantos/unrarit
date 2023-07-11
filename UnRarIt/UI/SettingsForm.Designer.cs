@@ -60,6 +60,9 @@
       this.btnDefaultSourceFolderSearch = new System.Windows.Forms.Button();
       this.lblDefaultSourceFolder = new System.Windows.Forms.Label();
       this.BrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+      this.groupBox8 = new System.Windows.Forms.GroupBox();
+      this.rbtnPasswordExportSimple = new System.Windows.Forms.RadioButton();
+      this.rbtnPasswordExportDetailed = new System.Windows.Forms.RadioButton();
       this.groupBox1.SuspendLayout();
       this.groupBox2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.OwnDirectoryLimit)).BeginInit();
@@ -69,13 +72,14 @@
       ((System.ComponentModel.ISupportInitialize)(this.Threads)).BeginInit();
       this.groupBox6.SuspendLayout();
       this.groupBox7.SuspendLayout();
+      this.groupBox8.SuspendLayout();
       this.SuspendLayout();
       // 
       // buttonCancel
       // 
       this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.buttonCancel.Location = new System.Drawing.Point(343, 368);
+      this.buttonCancel.Location = new System.Drawing.Point(343, 416);
       this.buttonCancel.Name = "buttonCancel";
       this.buttonCancel.Size = new System.Drawing.Size(75, 23);
       this.buttonCancel.TabIndex = 0;
@@ -86,7 +90,7 @@
       // buttonOK
       // 
       this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.buttonOK.Location = new System.Drawing.Point(262, 368);
+      this.buttonOK.Location = new System.Drawing.Point(262, 416);
       this.buttonOK.Name = "buttonOK";
       this.buttonOK.Size = new System.Drawing.Size(75, 23);
       this.buttonOK.TabIndex = 1;
@@ -342,7 +346,7 @@
       // btnPassFileSearch
       // 
       this.btnPassFileSearch.Location = new System.Drawing.Point(139, 27);
-      this.btnPassFileSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.btnPassFileSearch.Margin = new System.Windows.Forms.Padding(2);
       this.btnPassFileSearch.Name = "btnPassFileSearch";
       this.btnPassFileSearch.Size = new System.Drawing.Size(56, 19);
       this.btnPassFileSearch.TabIndex = 1;
@@ -400,13 +404,47 @@
       // 
       this.BrowserDialog.SelectedPath = "v";
       // 
+      // groupBox8
+      // 
+      this.groupBox8.Controls.Add(this.rbtnPasswordExportDetailed);
+      this.groupBox8.Controls.Add(this.rbtnPasswordExportSimple);
+      this.groupBox8.Location = new System.Drawing.Point(12, 363);
+      this.groupBox8.Name = "groupBox8";
+      this.groupBox8.Size = new System.Drawing.Size(200, 76);
+      this.groupBox8.TabIndex = 6;
+      this.groupBox8.TabStop = false;
+      this.groupBox8.Text = "Password Export:";
+      // 
+      // rbtnPasswordExportSimple
+      // 
+      this.rbtnPasswordExportSimple.AutoSize = true;
+      this.rbtnPasswordExportSimple.Location = new System.Drawing.Point(17, 19);
+      this.rbtnPasswordExportSimple.Name = "rbtnPasswordExportSimple";
+      this.rbtnPasswordExportSimple.Size = new System.Drawing.Size(56, 17);
+      this.rbtnPasswordExportSimple.TabIndex = 6;
+      this.rbtnPasswordExportSimple.TabStop = true;
+      this.rbtnPasswordExportSimple.Text = "Simple";
+      this.rbtnPasswordExportSimple.UseVisualStyleBackColor = true;
+      // 
+      // rbtnPasswordExportDetailed
+      // 
+      this.rbtnPasswordExportDetailed.AutoSize = true;
+      this.rbtnPasswordExportDetailed.Location = new System.Drawing.Point(17, 42);
+      this.rbtnPasswordExportDetailed.Name = "rbtnPasswordExportDetailed";
+      this.rbtnPasswordExportDetailed.Size = new System.Drawing.Size(64, 17);
+      this.rbtnPasswordExportDetailed.TabIndex = 7;
+      this.rbtnPasswordExportDetailed.TabStop = true;
+      this.rbtnPasswordExportDetailed.Text = "Detailed";
+      this.rbtnPasswordExportDetailed.UseVisualStyleBackColor = true;
+      // 
       // SettingsForm
       // 
       this.AcceptButton = this.buttonOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.buttonCancel;
-      this.ClientSize = new System.Drawing.Size(430, 399);
+      this.ClientSize = new System.Drawing.Size(430, 447);
+      this.Controls.Add(this.groupBox8);
       this.Controls.Add(this.groupBox7);
       this.Controls.Add(this.groupBox6);
       this.Controls.Add(this.groupBox5);
@@ -439,6 +477,8 @@
       this.groupBox6.PerformLayout();
       this.groupBox7.ResumeLayout(false);
       this.groupBox7.PerformLayout();
+      this.groupBox8.ResumeLayout(false);
+      this.groupBox8.PerformLayout();
       this.ResumeLayout(false);
 
         }
@@ -477,5 +517,8 @@
     private System.Windows.Forms.Button btnDefaultSourceFolderSearch;
     private System.Windows.Forms.Label lblDefaultSourceFolder;
     private System.Windows.Forms.FolderBrowserDialog BrowserDialog;
+    private System.Windows.Forms.GroupBox groupBox8;
+    private System.Windows.Forms.RadioButton rbtnPasswordExportDetailed;
+    private System.Windows.Forms.RadioButton rbtnPasswordExportSimple;
   }
 }

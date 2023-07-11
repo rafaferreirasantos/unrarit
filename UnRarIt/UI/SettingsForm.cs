@@ -57,6 +57,10 @@ namespace UnRarIt
       Nesting.Checked = Config.Nesting;
       LowPriority.Checked = Config.Priority == Interop.ThreadIOPriority.Low;
       lblPassFile.Text = Config.PasswordFile;
+      lblDefaultSourceFolder.Text = Config.DefaultSourceDir;
+      rbtnPasswordExportSimple.Checked = !Config.PasswordExportDetailed;
+      rbtnPasswordExportDetailed.Checked = Config.PasswordExportDetailed;
+
     }
 
     private void buttonCancel_Click(object sender, EventArgs e)
@@ -116,6 +120,8 @@ namespace UnRarIt
       }
       Config.Nesting = Nesting.Checked;
       Config.Priority = LowPriority.Checked ? Interop.ThreadIOPriority.Low : Interop.ThreadIOPriority.Normal;
+
+      Config.PasswordExportDetailed = rbtnPasswordExportDetailed.Checked;
 
       Config.Save();
       Close();
